@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h3>Query results:</h3>
+<br/>
+<table class="table table-hover table-bordered table-striped">
+    {% for food in foods %}
+    <tr>
+        <td>{{ food.name }} | {{ food.carb_grams}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br/><br/>
+
+
+
+{% endblock %}

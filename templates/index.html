@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <!-- <strong>Holy guacamole!</strong> You should check in on some of those fields below. -->
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+{% endfor %}
+
+<h1> Hi Seb</h1>
+
+
+<div class="food-grid">
+    <div class="txt-heading">Available Food</div>
+    {% for food in foods %}
+        <div class="food-item" id="food-item">
+            <form method="POST" action="/add/{{ food.id }}">
+                <div class="food-title">{{ food["name"].capitalize() }}</div>
+                <div class="food-grams">{{ food["carb_grams"] }} Carb Grams</div>
+                <div class="food-image"><img src="static/images/{{ food['image'] }}" width="250" height="200"></div>
+
+                <div class="food-title-footer">
+                    <div class="food-action">
+                        <input type="submit" name="_id" class="btnAddAction" value="Add Item"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

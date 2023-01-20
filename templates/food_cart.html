@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Here we gonna show u what you chose mothrfckr</h1>
+
+<div class="food-grid">
+    <div class="txt-heading">Foods Added to Cart</div>
+    <br/>
+    <table class="table table-hover table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th style="text-align:center;" width="4%">Food Name</th>
+                <th style="text-align:center;" width="2%">Carb Grams</th>
+                <th style="text-align:center;" width="2%">Insulin Dosage</th>
+                <th style="text-align:center;" width="2%">Remove Item</th>
+            </tr>
+            {% for food in foods_added %}
+                <tr>
+                    <td style="text-align:center;">{{ food["name"].capitalize() }}</td>
+                    <td style="text-align:center;">{{ food["carb_grams"] }}</td>
+                    <td style="text-align:center;">{{ food["carb_grams"] * insuline_to_carb }}</td>
+                    <td style="text-align:center;">
+                        <a href="{{ url_for('.delete_food', id=food['id']) }}" class="btnRemoveAction">
+                            <img src="/static/images/icon-delete.png" alt="Remove Item" />
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% set carb_sum = carb_grams_sum %}
+            {% set insulin_sum = insulin_dosage_sum %}
+            <tr>
+                <td style="text-align:center;"><b>Total</b></td>
+                <td style="text-align:center;"><b>{{ carb_sum }}</b></td>
+                <td style="text-align:center;"><b>{{ insulin_sum }}</b></td>
+                <td style="text-align:center;"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
