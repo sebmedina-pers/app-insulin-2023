@@ -61,13 +61,21 @@ def delete_food(id):
         carb_grams_sum=carb_grams_sum,
         insulin_dosage_sum=insulin_dosage_sum
     )
-# calculates insulin dosage based on selected items in food_cart
-@app.route("/calculate")
-def calculate():
-    # remove all foods from list
+# # calculates insulin dosage based on selected items in food_cart
+# @app.route("/calculate")
+# def calculate():
+#     # remove all foods from list
+#     FOOD_CART.clear()
+#     return render_template(
+#         "calculate.html"
+#     )
+
+# add modal
+@app.route("/modal")
+def modal():
     FOOD_CART.clear()
     return render_template(
-        "calculate.html"
+        "modal.html"
     )
 
 if __name__ == "__main__":
