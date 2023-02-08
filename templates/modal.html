@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block modal %}
+<!-- Modal -->
+<div class="modal fade" id="sebmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-toggle="sebmodal" data-target="#sebmodal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+    console.log("window is loaded")
+    $("#sebmodal").modal("show")
+})
+// const myModal = document.getElementById('exampleModal')
+// // const myInput = document.getElementById('myInput')
+
+// myModal.addEventListener('shown.bs.modal', () => {
+//     myModal.focus()
+// })
+</script>
+{% endblock %}
