@@ -2,10 +2,17 @@
 
 {% block content %}
 
-<!-- <h1>Here we gonna show u what you chose mothrfckr</h1> -->
-
+<br/>
 <a href="/modal" class="btn btn-primary" data-toggle="modal" data-target="#sebmodal">Calculate</a>
 <br/><br/>
+
+<form method="POST">
+<div class="input-group mb-3">
+    <span class="input-group-text" id="entered_glucose_level" name="entered_glucose_level">Enter Glucose Level</span>
+    <input type="text" class="form-control" id="entered_glucose_level" name="entered_glucose_level" placeholder="eg. 100 mg/dl" aria-label="Username" aria-describedby="entered_glucose_level">
+</div>
+</form>
+<br/><hr>
 
 <div class="food-grid">
     <div class="txt-heading">Foods Added to Cart</div>
