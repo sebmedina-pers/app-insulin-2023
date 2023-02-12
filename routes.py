@@ -25,7 +25,7 @@ def add_food(id):
     return redirect(url_for(".index"))
 
 # displays all added foods to display in cart
-@app.route("/food_cart")
+@app.route("/food_cart", methods=["GET", "POST"])
 def food_cart():
     carb_grams_sum, insulin_dosage_sum = 0, 0
     foods_added = FOOD_CART
@@ -34,6 +34,8 @@ def food_cart():
         carb_grams_sum += food.carb_grams
         insulin_dose = food.carb_grams * INSULINE_TO_CARB["default"]
         insulin_dosage_sum += insulin_dose
+    # TEST#2
+    session["insulin_dosage_sum"] = insulin_dosage_sum
     return render_template(
         "food_cart.html",
         foods_added=foods_added,
@@ -71,9 +73,29 @@ def delete_food(id):
 #     )
 
 # add modal
-@app.route("/modal")
-def modal():
-    FOOD_CART.clear()
+# @app.route("/modal", methods=["GET", "POST"])
+# def modal():
+#     # print(request)
+#     # print("request method", request.method)
+#     # FOOD_CART.clear()
+#     insuline_to_carb = INSULINE_TO_CARB["default"]
+#     session["test"] = "TEST WORKS"
+#     print(session["insulin_dosage_sum"])
+#     print(request.form.get("entered_glucose_level"))
+#     return render_template(
+#         "modal.html",
+#         insuline_to_carb=insuline_to_carb,
+#         food_cart=FOOD_CART
+#     )
+#     """TO DO:
+#         1. figure out how to select the entered glucose level
+#         2. save that in session[] or in a constant that can be transferable
+#     """
+
+@app.route("/", methods=["GET", "POST"])
+def calculate():
+    # print(request.method)
+    print(request.form.get("glevel"))
     return render_template(
         "modal.html"
     )

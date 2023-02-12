@@ -2,17 +2,25 @@
 
 {% block content %}
 
-<br/>
+<!-- <br/>
 <a href="/modal" class="btn btn-primary" data-toggle="modal" data-target="#sebmodal">Calculate</a>
-<br/><br/>
+<br/><br/> -->
 
-<form method="POST">
+<form action="{{ url_for('calculate') }}" method="POST">
+<button class="btn btn-primary" type="calculate">Calculate</button>
+<br/><br/>
 <div class="input-group mb-3">
-    <span class="input-group-text" id="entered_glucose_level" name="entered_glucose_level">Enter Glucose Level</span>
-    <input type="text" class="form-control" id="entered_glucose_level" name="entered_glucose_level" placeholder="eg. 100 mg/dl" aria-label="Username" aria-describedby="entered_glucose_level">
+    <span class="input-group-text">Enter Glucose Level</span>
+    <input type="text" class="form-control" id="glucose_level" name="glevel" placeholder="eg. 100 mg/dl" aria-label="Username" aria-describedby="entered_glucose_level" value="100">
 </div>
 </form>
-<br/><hr>
+<hr>
+
+<!-- <form action="{{ url_for('calculate') }}" method="POST">
+    <label for="glucose_level">Enter Glucose Level:</label>
+    <input type="text" id="glucose_level" name="glevel" placeholder="100">
+    <button class="btn btn-primary" type="calculate">Calculate</button>
+</form> -->
 
 <div class="food-grid">
     <div class="txt-heading">Foods Added to Cart</div>
