@@ -36,6 +36,7 @@ def food_cart():
         insulin_dosage_sum += insulin_dose
     # TEST#2
     session["insulin_dosage_sum"] = insulin_dosage_sum
+    print(session["insulin_dosage_sum"])
     return render_template(
         "food_cart.html",
         foods_added=foods_added,
@@ -97,7 +98,8 @@ def calculate():
     # print(request.method)
     print(request.form.get("glevel"))
     return render_template(
-        "modal.html"
+        "modal.html",
+        food_cart=FOOD_CART
     )
 
 if __name__ == "__main__":
