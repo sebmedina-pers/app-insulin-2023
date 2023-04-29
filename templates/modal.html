@@ -4,20 +4,50 @@
 <!-- Modal -->
 {% set ins_to_carb = insuline_to_carb %}
 {% set food_cart = food_cart %}
-{% set test = session["test"] %}
-{% set ins_dose = session["insulin_dosage_sum"] %}
+{% set glucose_level = glucose_level %}
+{% set units_needed = session["insulin_dosage_sum"] %}
+{% set extra_units_needed = extra_units_needed %}
+{% set food_item_present = session["food_item_present"]%}
+{% set total_units_needed = units_needed + extra_units_needed %}
 <div class="modal fade" id="sebmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-toggle="sebmodal" data-target="#sebmodal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Insulin Dosage Calculation</h1>
         </div>
         <div class="modal-body">
-          ...
-          {{ ins_to_carb }}
-          {{ food_cart }}
-          {{ test }}
-          {{ ins_dose }}
+          <div class="form-group">
+              <label for="total-units" class="col-form-label">Total Units Needed: {{ total_units_needed }}</label>
+          </div>
+          <div class="form-group">
+              <label for="details" class="col-form-label"> - Total units to correct glucose level: {{ extra_units_needed }}</label>
+          </div>
+          <div class="form-group">
+              <label for="details" class="col-form-label"> - Total units for carb consumption: {{ units_needed }}</label>
+          </div>
+          <hr>
+            {% if food_item_present == True %}
+                <table class="tbl-cart" cellpadding="10" cellspacing="1">
+                  <tbody>
+                    <tr>
+                      <th style="text-align:center;" width="2%">Food Name</th>
+                      <th style="text-align:center;" width="3%">Carb Grams</th>
+                      <th style="text-align:center;" width="3%">Insulin to Carb ratio</th>
+                      <th style="text-align:center;" width="3%">Insulin dose</th>
+                    </tr>
+                      {% for food in food_cart %}
+                          <tr>
+                            <td style="text-align:center;">{{ food["name"].capitalize() }}</td>
+                            <td style="text-align:center;">{{ food["carb_grams"] }}</td>
+                            <td style="text-align:center;">{{ ins_to_carb }}</td>
+                            <td style="text-align:center;">{{ food["carb_grams"] * ins_to_carb }}</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+            {% else %}
+                Foods have not been selected...
+            {% endif %}
         </div>
         <div class="modal-footer">
         </div>

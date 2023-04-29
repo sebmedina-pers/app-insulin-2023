@@ -4,6 +4,7 @@ from flask import render_template, flash, request, url_for, redirect, session
 from .app import app
 from .models import db, Foods
 from .constants import INSULINE_TO_CARB, FOOD_CART
+from .helpers import glevel_based_insulin_needed
 
 # displays all available foods in the db
 @app.route("/", methods=["GET"])
@@ -36,7 +37,9 @@ def food_cart():
         insulin_dosage_sum += insulin_dose
     # TEST#2
     session["insulin_dosage_sum"] = insulin_dosage_sum
+    # session["foods_added"] = foods_added
     print(session["insulin_dosage_sum"])
+    # print(f"added here to pass{session['foods_added']}")
     return render_template(
         "food_cart.html",
         foods_added=foods_added,
@@ -53,10 +56,15 @@ def delete_food(id):
     for food_item in FOOD_CART:
         if food_item.id == id:
             FOOD_CART.remove(food_item)
-    for food in foods_added:
-        carb_grams_sum += food.carb_grams
-        insulin_dose = food.carb_grams * INSULINE_TO_CARB["default"]
-        insulin_dosage_sum += insulin_dose
+            insulin_dose = food_item.carb_grams * INSULINE_TO_CARB["default"]
+            session["insulin_dosage_sum"] -= insulin_dose
+    # MIGHT BE UNNECESSARY
+    # for food in foods_added:
+    #     carb_grams_sum += food.carb_grams
+    #     insulin_dose = food.carb_grams * INSULINE_TO_CARB["default"]
+    #     insulin_dosage_sum += insulin_dose
+
+    print(session["insulin_dosage_sum"])
     return render_template(
         "food_cart.html",
         foods_added=FOOD_CART,
@@ -64,6 +72,24 @@ def delete_food(id):
         carb_grams_sum=carb_grams_sum,
         insulin_dosage_sum=insulin_dosage_sum
     )
+
+@app.route("/", methods=["GET", "POST"])
+def calculate():
+    glucose_level = request.form.get("glevel")
+    extra_units_needed = glevel_based_insulin_needed(int(glucose_level))
+    session["food_item_present"] = True if FOOD_CART else False
+    insuline_to_carb = INSULINE_TO_CARB["default"]
+    return render_template(
+        "modal.html",
+        food_cart=FOOD_CART,
+        glucose_level=glucose_level,
+        insuline_to_carb=insuline_to_carb,
+        extra_units_needed=extra_units_needed
+    )
+
+if __name__ == "__main__":
+    app.run(host="localhost", port=4999)
+
 # # calculates insulin dosage based on selected items in food_cart
 # @app.route("/calculate")
 # def calculate():
@@ -93,17 +119,6 @@ def delete_food(id):
 #         2. save that in session[] or in a constant that can be transferable
 #     """
 
-@app.route("/", methods=["GET", "POST"])
-def calculate():
-    # print(request.method)
-    print(request.form.get("glevel"))
-    return render_template(
-        "modal.html",
-        food_cart=FOOD_CART
-    )
-
-if __name__ == "__main__":
-    app.run(host="localhost", port=4999)
 
 
 
